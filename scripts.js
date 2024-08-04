@@ -69,7 +69,6 @@ function selectEntry(){
     const entryName = this.querySelector(".entry-name").innerHTML;
     //load the content from the local storage
     const entryIndex = this.getAttribute("data-index");
-    console.log(entryIndex);
     const entryContent = loadEntryContent(entryIndex);
 
     const diaryTittle = document.querySelector(".diary-tittle");
@@ -81,12 +80,19 @@ function selectEntry(){
 function deleteEntry(){
     //remove the selected entry from the entry-list
     if (confirm("Are you sure you want to delete this entry?")) {
-        //remove the selected entry from the entry-list
         var selectedEntry = document.querySelector(".entry-selected");
+        //remove the selected entry from the local storage
+        deleteEntryStorage(selectedEntry.getAttribute("data-index"));
+        //remove the selected entry from the entry-list
         selectedEntry.remove();
+        //clean the diary-tittle and diary-text
+        const diaryTittle = document.querySelector(".diary-tittle");
+        diaryTittle.innerHTML = "";
+        const diaryText = document.querySelector(".diary-text");
+        diaryText.value = "";
     }
     entryAmount--;
-    //reasing index
+    //reasign index
     var entries = document.querySelectorAll(".entry");
     entries.forEach((entry, index) => {
         entry.setAttribute("data-index", index);
@@ -103,6 +109,7 @@ function changeEntryName(){
     const entryDate = selectedEntry.querySelector(".entry-date-last");
     var date = new Date().toLocaleDateString();
     entryDate.innerHTML = "Last modified: " + date;
+    saveEntry();
 }
 
 function handleInputContent(){
@@ -236,6 +243,22 @@ function loadEntryContent(index){
 }
 
 //TODO: add the delete buttom logic to work with local storage
+function deleteEntryStorage(index){
+    //delete the selected entry from the local storage
+    try {
+        const entries = JSON.parse(localStorage.getItem("entries"));
+        if (entries) {
+            entries.splice(index, 1);
+            localStorage.setItem("entries", JSON.stringify(entries));
+        } else {
+            console.log("No entries found");
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
 //TODO: add a search bar to search for entries
 //TODO: add a save copy button to save the entry to a .doc file
 //TODO: make the front end look better

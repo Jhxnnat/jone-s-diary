@@ -1,0 +1,94 @@
+body {
+    margin: auto;
+    max-width: 960px;
+    font-family: Arial, sans-serif;
+}
+
+.title {
+    text-align: left;
+    margin: 10px;
+}
+
+.main {
+    display: flex;
+    gap: 10px;
+    max-height: 700px;
+    min-height: 500px;
+}
+
+.entry-explorer {
+    flex: 1;
+    background-color: antiquewhite;
+    border: 1px solid black;
+    overflow-y: auto;
+}
+
+.entry-list-title {
+    text-align: center;
+    margin: 10px;
+}
+
+.entry-list-add {
+    text-align: center;
+    margin: 10px;
+}
+
+.entry-list {
+    margin: 10px;
+}
+
+.entry {
+    padding: 10px;
+    border: 1px solid black;
+    margin-bottom: 10px;
+}
+.entry:hover {
+    background-color: #f9f9f9;
+}
+
+.entry-name {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.entry-date {
+    font-size: 12px;
+    color: gray;
+}
+.entry-date-last{
+    font-size: 12px;
+    color: gray;
+}
+
+.entry-delete {
+    text-align: right;
+    color: red;
+    cursor: pointer;
+}
+
+.entry-selected {
+    background-color: peachpuff;
+}
+
+.main-container {
+    flex: 3;
+    background-color: azure;
+    border : 1px solid black;
+    padding: 10px;
+}
+
+.diary-tittle {
+    text-align: center;
+    border: 1px solid black;
+}
+
+.diary-text {
+    font-size: 20px;
+    padding: 10px;
+    width: 97%;
+    height: 77%;
+    border : 1px solid black;
+    background: white;
+    resize: none;
+    overflow-y: auto;
+}

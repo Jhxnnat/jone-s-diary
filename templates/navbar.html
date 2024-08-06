@@ -1,0 +1,23 @@
+<ul class="nav nav-tabs mb-3">
+    <li class="nav-item">
+        <a class="nav-link" aria-current="page" href="{{ url_for('home') }}">Home</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('write',name='jhonna') }}">Write</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link disabled" href="#">Blog</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" aria-disabled="true">About</a>
+    </li>
+    <li class="ms-auto nav-item">
+        <a class="nav-link disabled content-end" aria-disabled="true">
+            <i class="bi bi-person-square"></i>
+            {{ session['user'] }}
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" aria-disabled="true" href="{{ url_for('logout') }}">Logout</a>
+    </li>
+</ul>

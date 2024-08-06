@@ -1,0 +1,41 @@
+
+{% extends "base.html" %}
+
+{% block title %}Diary{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='/editor/editor.css') }}">
+    <!-- <script src="{{ url_for('static', filename='js/editor.js') }}" defer></script> -->
+{% endblock %}
+
+{% block content %}
+<h1 class="title">Hey {{ user_name }}</h1>
+<div class="main">
+    <div class="entry-explorer">
+        <h2 class="entry-list-title">Entries</h2>
+        <button class="entry-list-add">
+            <i class="bi bi-chat-square-heart"> Add new</i>
+        </button>
+        <div class="entry-list">
+            <!--<div class="entry entry-selected" data-index="0">
+                <p class="entry-name">Entry 0</p>
+                <p class="entry-date">no date yet</p>
+                <p class="entry-date-last">no date yet</p>
+            </div>-->
+        </div>
+    </div>
+
+    <div class="main-container">
+        <div class="diary-tittle-container">
+            <h2 class="diary-tittle" contenteditable="true" spellcheck="false">Hey</h2>
+            <button class="entry-delete">
+                <i class="bi bi-trash"> Delete</i>
+            </button>
+        </div>
+        <div class="diary-text-container">
+            <textarea class="diary-text" spellcheck="false"></textarea>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,47 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Someone's Diary</title>
-    <link rel="shortcut icon" href="/static/favicon.ico"/>
-    <link rel="stylesheet" href="/static/styles.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Edu+AU+VIC+WA+NT+Hand:wght@400..700&family=Noto+Sans+Tai+Le&display=swap" rel="stylesheet">
 
-    <script src="/static/scripts.js" defer></script>
-</head>
-<body>
-    <h1 class="title">Jone's Diary?...</h1>
-    <div class="main">
-        <div class="entry-explorer">
-            <h2 class="entry-list-title">Entries</h2>
-            <button class="entry-list-add">
-                <i class="bi bi-chat-square-heart"> Add new</i>
-            </button>
-            <div class="entry-list">
-                <!--<div class="entry entry-selected" data-index="0">
-                    <p class="entry-name">Entry 0</p>
-                    <p class="entry-date">no date yet</p>
-                    <p class="entry-date-last">no date yet</p>
-                </div>-->
-            </div>
-        </div>
-    
-        <div class="main-container">
-            <div class="diary-tittle-container">
-                <h2 class="diary-tittle" contenteditable="true" spellcheck="false">Hey</h2>
-                <button class="entry-delete">
-                    <i class="bi bi-trash"> Delete</i>
-                </button>
-            </div>
-            <div class="diary-text-container">
-                <textarea class="diary-text" spellcheck="false"></textarea>
-            </div>
-        </div>
-    </div>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block title %}Index{% endblock %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block content %}
+<h1 class="title">Index</h1>
+{% endblock %}

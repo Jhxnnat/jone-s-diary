@@ -38,6 +38,17 @@ body {
     max-height: 500px;
 }
 
+.main-container {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    background-color: #FFC8DD;;
+    border : 1px solid black;
+    min-width: 250px;
+    min-height: 400px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
 .entry-explorer {
     flex: 1;
     background-color: #FFC8DD;
@@ -75,19 +86,43 @@ body {
     max-height: 400px;
     margin: 10px;
     overflow-y: auto;
-    background-color: black;
+    /* background-color: black; */
+}
+
+.entry-container {
+    display: flex;
+    flex-direction: row;
+    margin: 10px;
 }
 
 .entry {
+    width: 100%;
+    flex: 4;
     padding: 10px;
     padding-right: 5px;
     border: 1px solid black;
     margin-bottom: 10px;
     background-color: #FFAFCC;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    color: black;
 }
 .entry:hover {
     background-color: antiquewhite;
+    cursor: pointer;
+}
+
+.entry-delete {
+    background-color: #FFAFCC;
+    border: 1px solid black;
+    color: black;
+    flex: 1;
+    padding: 1px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-family: "Edu AU VIC WA NT Hand", cursive;
+    font-size: 16px;
+    margin-bottom: 10px;
     cursor: pointer;
 }
 
@@ -109,22 +144,8 @@ body {
     background-color: #BDE0FE;
 }
 
-.main-container {
-    flex: 3;
-    background-color: #FFC8DD;;
-    border : 1px solid black;
-    min-width: 250px;
-    min-height: 400px;
-    display: flex;
-    flex-direction: column;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
-
-.diary-tittle-container {
-    flex: 1;
-    display: flex;
-    background-color: #A2D2FF;
-    border-bottom: 1px solid black;
+.entry-delete:hover {
+    background-color: #FFC8DD;
 }
 
 .diary-tittle {
@@ -132,22 +153,13 @@ body {
     text-align: center;
     border: none;
     margin: 10px;
+    background: none;
 }
 
-.entry-delete {
-    background-color: #FFAFCC;
-    border: 1px solid black;
-    padding: 1px 10px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-family: "Edu AU VIC WA NT Hand", cursive;
-    font-size: 16px;
-    margin: 10px;
-    cursor: pointer;
-}
-.entry-delete:hover {
-    background-color: #FFC8DD;
+.diary-tittle-container {
+    display: flex;
+    background-color: #A2D2FF;
+    border-bottom: 1px solid black;
 }
 
 .diary-text-container {
@@ -166,4 +178,21 @@ body {
     border: none;
     resize: none;
     overflow-y: auto;
+}
+
+.diary-button {
+    background-color: #FFAFCC;
+    border: 1px solid black;
+    color: black;
+    padding: 1px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-family: "Edu AU VIC WA NT Hand", cursive;
+    font-size: 16px;
+    margin: 10px;
+    cursor: pointer;
+}
+.diary-button:hover {
+    background-color: #FFC8DD;
 }

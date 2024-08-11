@@ -1,0 +1,27 @@
+
+{% extends "base.html" %}
+
+{% block title %}Diary{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='/editor/editor.css') }}">
+    <!-- <script src="{{ url_for('static', filename='editor/editor.js') }}" defer></script> -->
+{% endblock %}
+
+{% block content %}
+
+    <div class="">
+        <form class="" action="/deleteentry" method="POST">
+            <input type="hidden" name="entry-key" value="{{ key }}">
+            <h2 class="text" for="delete-entry">Are you sure you want to delete {{ name }}?</h2>
+            <br>
+            <button class="diary-button bg-danger" type="submit">
+                <i class="bi bi-trash"> Delete</i>
+            </button>
+        </form>
+        <button class="diary-button" onclick="history.back()">
+            Get Back
+        </button>
+    </div>
+
+{% endblock %}

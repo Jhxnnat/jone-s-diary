@@ -1,0 +1,45 @@
+
+{% extends "base.html" %}
+
+{% block title %}Diary{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='/editor/editor.css') }}">
+    <!-- <script src="{{ url_for('static', filename='editor/editor.js') }}" defer></script> -->
+{% endblock %}
+
+{% block content %}
+
+    <h1 class="title">Hey {{ user_name }}</h1>
+    <div class="main">
+        <div class="entry-explorer">
+            <h2 class="entry-list-title">Entries</h2>
+            <a class="entry-list-add" href="{{ url_for('newentry') }}">
+                <i class="bi bi-chat-square-heart"> Add new</i>
+            </a>
+            <div class="entry-list">
+                {% for key, entry in entries | dictsort %}
+                    <div class="entry-container">
+                        <a class="entry link-underline link-underline-opacity-0" data-index="{{ key }}" type="submit" href="{{ url_for('editentry', index=key) }}">
+                            <p class="entry-name">{{ entry.name|e }}</p>
+                            <p class="entry-date">{{ entry.date }}</p>
+                            <p class="entry-date-last">{{ entry.datelast }}</p>
+                            <p class="entry-date-last">{{ key }}</p>
+                        </a>
+                        
+                        <form id="delete-form" method="POST" action="/deleteentryconfirm" name="delete-form">
+                            <input type="hidden" name="entry-key" value="{{ key }}">
+                            <input type="hidden" name="entry-name" value="{{ entry.name }}">
+                            <button class="entry-delete link-underline link-underline-opacity-0" type="submit">
+                                <i class="bi bi-trash"> Delete</i>
+                            </button>
+                        </form>
+                    </div>
+
+                {% endfor %}
+            </div>
+        </div>
+    
+    </div>
+
+{% endblock %}

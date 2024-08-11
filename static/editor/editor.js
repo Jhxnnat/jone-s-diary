@@ -2,6 +2,7 @@
 window.entryAmount = 0;
 
 document.addEventListener("DOMContentLoaded", function(){
+    console.log("Document loaded");
     //add event listener to the new-entry button
     document.querySelector(".entry-list-add").addEventListener("click", newEntry);
 

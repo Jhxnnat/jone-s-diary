@@ -257,9 +257,3 @@ function deleteEntryStorage(index){
         console.log(error);
     }
 }
-
-
-//TODO: add a search bar to search for entries
-//TODO: add a save copy button to save the entry to a .doc file
-//TODO: make the front end look better
-

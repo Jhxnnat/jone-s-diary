@@ -1,73 +1,100 @@
-//global variables
 window.entryAmount = 0;
 
-document.addEventListener("DOMContentLoaded", function(){
-    //add event listener to the new-entry button
+document.addEventListener("DOMContentLoaded", function() {
     document.querySelector(".entry-list-add").addEventListener("click", newEntry);
 
-    //load the entries from the local storage
     loadEntries()
 
-    //add event listener to the first entry
     const entries = document.querySelectorAll(".entry");
     entries.forEach(entry => {
         entry.addEventListener("click", selectEntry);
-    });
+    })
 
-    //add event listener to the delete-entry button
-    document.querySelector(".entry-delete").addEventListener("click", deleteEntry);
+    document.querySelector(".entry-delete").addEventListener("click", deleteEntry)
+    document.querySelector(".diary-tittle").addEventListener("input", changeEntryName)
+    document.querySelector(".diary-text").addEventListener("input", handleInputContent)
 
-    //add event listener to the entry-tittle input
-    document.querySelector(".diary-tittle").addEventListener("input", changeEntryName);
-
-    //add event listener for the content input
-    document.querySelector(".diary-text").addEventListener("input", handleInputContent);
+    setupThemes()
 });
 
-function newEntry(){
-    //first add the new entry to the entry-list
-    var entryList = document.querySelector(".entry-list");
-    
-    const entry = document.createElement("div");
-    entry.className = "entry";
-    entry.addEventListener("click", selectEntry);
-    //add index
-    entry.setAttribute("data-index", entryAmount);
-    entryAmount++;
+let themes = [
+    "theme-gruvbox",
+    "theme-gruvbox-light",
+    "theme-dracula",
+    "theme-solarized-dark",
+    "theme-solarized-light",
+    "theme-nord",
+    "theme-material",
+    "theme-jone"
+]
+function setupThemes(){
 
-    const entryName = document.createElement("p");
-    entryName.className = "entry-name";
-    entryName.innerHTML = "New Entry";
-    
-    const entryDate = document.createElement("p");
-    entryDate.className = "entry-date";
-    entryDate.innerHTML = new Date().toLocaleDateString();
+    const local_theme = localStorage.getItem("theme")
+    if (local_theme) {
+        changeTheme(local_theme)
+    }
 
-    const entryDateLast = document.createElement("p");
-    entryDateLast.className = "entry-date-last";
-    entryDateLast.innerHTML = "Last modified: " + new Date().toLocaleDateString();
+    const selector_list = document.getElementById("themes-selector-list")
+    themes.forEach(theme => {
+        const _li = document.createElement("li");
+        _li.innerHTML = theme;
+        _li.className = "themes-selector-item"
+        _li.addEventListener("click", changeThemeClick)
+        selector_list.appendChild(_li);
+    })
+}
+
+function changeTheme(theme) {
+    const body = document.getElementById("body")
+    body.className = theme
+    localStorage.setItem("theme", theme)
+}
+
+function changeThemeClick(){
+    const theme = this.innerHTML;
+    changeTheme(theme)
+}
+
+function newEntry() {
+    var entryList = document.querySelector(".entry-list")
+
+    const entry = document.createElement("div")
+    entry.className = "entry"
+    entry.addEventListener("click", selectEntry)
+
+    entry.setAttribute("data-index", entryAmount)
+    entryAmount++
+
+    const entryName = document.createElement("p")
+    entryName.className = "entry-name"
+    entryName.innerHTML = "New Entry"
+
+    const entryDate = document.createElement("p")
+    entryDate.className = "entry-date"
+    let date = new Date().toLocaleDateString()
+    entryDate.innerHTML = date
+
+    const entryDateLast = document.createElement("p")
+    entryDateLast.className = "entry-date-last"
+    entryDateLast.innerHTML = "Last modified: " + date
 
     entry.appendChild(entryName);
     entry.appendChild(entryDate);
     entry.appendChild(entryDateLast);
     entryList.appendChild(entry);
 
-    addEntryStorage(entryDate.innerHTML);
+    addEntryStorage(date);
 }
 
-function selectEntry(){
-    //first remove the selected class from all entries
+function selectEntry() {
     var entries = document.querySelectorAll(".entry");
     entries.forEach(entry => {
         entry.classList.remove("entry-selected");
     });
 
-    //add the selected class to the clicked entry
     this.classList.add("entry-selected");
 
-    //change the tittle and it's content
     const entryName = this.querySelector(".entry-name").innerHTML;
-    //load the content from the local storage
     const entryIndex = this.getAttribute("data-index");
     const entryContent = loadEntryContent(entryIndex);
 
@@ -77,77 +104,60 @@ function selectEntry(){
     diaryText.value = entryContent;
 }
 
-function deleteEntry(){
-    //remove the selected entry from the entry-list
+function deleteEntry() {
     if (confirm("Are you sure you want to delete this entry?")) {
         var selectedEntry = document.querySelector(".entry-selected");
-        //remove the selected entry from the local storage
         deleteEntryStorage(selectedEntry.getAttribute("data-index"));
-        //remove the selected entry from the entry-list
         selectedEntry.remove();
-        //clean the diary-tittle and diary-text
         const diaryTittle = document.querySelector(".diary-tittle");
         diaryTittle.innerHTML = "";
         const diaryText = document.querySelector(".diary-text");
         diaryText.value = "";
     }
     entryAmount--;
-    //reasign index
     var entries = document.querySelectorAll(".entry");
     entries.forEach((entry, index) => {
         entry.setAttribute("data-index", index);
     });
 }
 
-function changeEntryName(){
-    //change the name of the selected entry
+function changeEntryName() {
     const selectedEntry = document.querySelector(".entry-selected");
+    if (!selectedEntry) return;
     const entryName = selectedEntry.querySelector(".entry-name");
     const diaryTittle = document.querySelector(".diary-tittle");
     entryName.innerHTML = diaryTittle.innerHTML;
-    //set the date of the selected entry
     const entryDate = selectedEntry.querySelector(".entry-date-last");
     var date = new Date().toLocaleDateString();
     entryDate.innerHTML = "Last modified: " + date;
     saveEntry();
 }
 
-function handleInputContent(){
-    //save the content of the diary-text to the selected entry
+function handleInputContent() {
     const selectedEntry = document.querySelector(".entry-selected");
+    if (!selectedEntry) return;
     const entryDateLast = selectedEntry.querySelector(".entry-date-last");
     var date = new Date().toLocaleDateString();
     entryDateLast.innerHTML = "Last modified: " + date;
     saveEntry();
 }
 
-/*Local Storage API
-
-how is going to be used in the project?
-[
-    {"name":"name","date":"0","datelast":"0","content":"my content"},
-    {"name":"name","date":"0","datelast":"0","content":"my content"},
-    {"name":"name","date":"0","datelast":"0","content":"my content"}
-]*/
-
-function loadEntries(){
-    //load the entries from the local storage
+function loadEntries() {
     try {
         const entries = JSON.parse(localStorage.getItem("entries"));
         if (entries) {
             entries.forEach(entry => {
-                //create the entry
                 var entryList = document.querySelector(".entry-list");
                 const newEntry = document.createElement("div");
                 newEntry.className = "entry";
                 newEntry.addEventListener("click", selectEntry);
-                
+
                 newEntry.setAttribute("data-index", entryAmount);
 
                 const entryName = document.createElement("p");
                 entryName.className = "entry-name";
                 entryName.innerHTML = entry.name;
-                
+
                 const entryDate = document.createElement("p");
                 entryDate.className = "entry-date";
                 entryDate.innerHTML = entry.date;
@@ -162,8 +172,6 @@ function loadEntries(){
                 entryList.appendChild(newEntry);
                 entryAmount++;
             });
-        } else {
-            console.log("No entries found");
         }
     } catch (error) {
         console.log(error);
@@ -171,8 +179,7 @@ function loadEntries(){
     }
 }
 
-function saveEntry(){
-    //save the selected entry to the local storage
+function saveEntry() {
     const selectedEntry = document.querySelector(".entry-selected");
     const entryIndex = selectedEntry.getAttribute("data-index");
     const entryName = selectedEntry.querySelector(".entry-name").innerHTML;
@@ -203,15 +210,13 @@ function saveEntry(){
     }
 }
 
-function addEntryStorage(date){
-    //add the selected entry to the local storage
+function addEntryStorage(date) {
     const entry = {
         "name": "empty",
         "date": date,
         "datelast": "no modification",
         "content": ""
     }
-
     try {
         const entries = JSON.parse(localStorage.getItem("entries"));
         if (entries) {
@@ -227,8 +232,7 @@ function addEntryStorage(date){
     }
 }
 
-function loadEntryContent(index){
-    //load the content of a specific index
+function loadEntryContent(index) {
     try {
         const entries = JSON.parse(localStorage.getItem("entries"));
         if (entries) {
@@ -242,9 +246,7 @@ function loadEntryContent(index){
     }
 }
 
-//TODO: add the delete buttom logic to work with local storage
-function deleteEntryStorage(index){
-    //delete the selected entry from the local storage
+function deleteEntryStorage(index) {
     try {
         const entries = JSON.parse(localStorage.getItem("entries"));
         if (entries) {
